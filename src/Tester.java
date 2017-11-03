@@ -14,18 +14,25 @@ import java.util.List;
 
 class Tester {
     private Class<?> classInstance;
-    private JTextArea textArea;
+    //private JTextArea textArea;
     private Object instance;
+
+    private List<Method> tests = new ArrayList<>(); // Array of all the test methods in the class
+    private Method setUp = null;
+    private Method tearDown = null;
 
     /**
      * @param name The name of the class to be tested.
-     * @param textArea A textarea to output the results of the tests to.
      * @throws ClassNotFoundException If the class is not found in this package.
      * @throws ClassFormatException If the .class file contains errors.
      * @throws ClassFormatError if the given class is not following the given spec.
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
      */
-    Tester(String name, JTextArea textArea) throws InstantiationException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException, ClassFormatException, ClassFormatError{
-        this.textArea = textArea;
+    Tester(String name) throws InstantiationException, IllegalAccessException, NoSuchMethodException,
+            ClassNotFoundException, ClassFormatException, ClassFormatError{
+        //this.textArea = textArea;
         classInstance = Class.forName(name);
         if (classInstance.isInterface()) {
             throw new ClassFormatError();
@@ -40,67 +47,67 @@ class Tester {
                 throw new ClassNotFoundException();
             }
         }
-        /* All other exceptions will be internal errors opening files */
-        /* and should not be prompted via the input. */
-
     }
 
     /**
-     * Runs through the tests in the given class.
-     * The tests are defined as methods beginning with "test".
-     * If a setUp method is found, it runs that method before every test.
-     * If a tearDown method is found, it runs that method after every test.
+     * Sets the Tester object up for the tests in the method by finding all the declared methods
+     * through the reflection library, finds all methods beginning with "test" and checks that they are
+     * legal, if they are legal they get added to the return array.
+     * If the method setUp and tearDown is found these are added to the Tester object to be run before and
+     * after every test.
+     * @return The array consisting of every "test"-method
      */
-    void run(){
-        List<Method> tests = new ArrayList<>(); // Array of all the names of the test methods
-        Method setUp = null;
-        Method tearDown = null;
+    ArrayList<String> setUp(){
+        ArrayList<String> formattingErrors = new ArrayList<>();
 
         /* Get all methods from class */
         Method[] testMethods = classInstance.getDeclaredMethods();
         for(Method method : testMethods){
             if(method.getParameterCount() == 0) {   // Don't add tests with arguments
                 if (method.getName().startsWith("test")) {
-                    tests.add(method);
+                    if(method.getReturnType().equals(Boolean.TYPE)){
+                        this.tests.add(method);
+                    }else{
+                        formattingErrors.add(method.getName() + " does not return a boolean.");
+                    }
                 } else if (method.getName().equals("setUp")) {
-                    setUp = method;
+                    this.setUp = method;
                 } else if (method.getName().equals("tearDown")) {
-                    tearDown = method;
+                    this.tearDown = method;
                 }
+            }else{
+                formattingErrors.add(method.getName() + " has parameters.");
             }
         }
-        /* Counters */
-        Integer success = 0;
-        Integer failed = 0;
-        Integer exceptionFailed = 0;
-
-        /* Run all methods */
+        return formattingErrors;
+    }
+    /**
+     * Runs through the tests in the given class.
+     * The tests are defined as methods beginning with "test".
+     * If a setUp method was found, it runs that method before every test.
+     * If a tearDown method was found, it runs that method after every test.
+     * @return A resultObject that includes the success and any errors that occurred during the test
+     */
+    ArrayList<ResultObject> run(){
+        ArrayList<ResultObject> results = new ArrayList<>();
         for(Method test : tests){
             try{
                 if(setUp != null){
                     setUp.invoke(instance);
                 }
-                this.textArea.append(test.getName() + ": ");
-                Object value = test.invoke(instance);
-                if((boolean)value){
-                    success++;
-                    this.textArea.append("SUCCESS\n");
+                if((boolean)test.invoke(instance)){
+
+                    results.add(new ResultObject(test, true));
                 }else{
-                    failed++;
-                    this.textArea.append("FAILED\n");
+                    results.add(new ResultObject(test, false));
                 }
                 if(tearDown != null){
                     tearDown.invoke(instance);
                 }
             }catch (Exception e){
-                exceptionFailed++;
-                this.textArea.append("FAILED Generated a " + e + "\n");
+                results.add(new ResultObject(test, false, e));
             }
         }
-        /* Print the results to the given textArea object */
-        Integer total = success + failed + exceptionFailed;
-        this.textArea.append("\n" + success + "/" + total + " tests succeded" + "\n");
-        this.textArea.append(failed + "/" + total + " tests failed" + "\n");
-        this.textArea.append(exceptionFailed + "/" + total + " failed because of an exception." + "\n\n");
+        return results;
     }
 }

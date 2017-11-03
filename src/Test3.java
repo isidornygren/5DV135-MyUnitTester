@@ -4,7 +4,7 @@
  * @author Isidor Nygren
  */
 
-public class Test3 {
+public class Test3 implements TestClass {
     /**
      * The tester application should not be able to run this test as it contains arguments
      * @param argument a mock argument

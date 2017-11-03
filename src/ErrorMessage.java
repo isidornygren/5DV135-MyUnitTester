@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
+
 /**
  * Creates a new dialog box for error messages
  * @version 1.0
