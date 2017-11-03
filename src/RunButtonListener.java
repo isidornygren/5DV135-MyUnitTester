@@ -1,5 +1,3 @@
-package assignment_1;
-
 import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
 
 import javax.swing.*;
@@ -23,6 +21,7 @@ class RunButtonListener implements ActionListener {
         this.textArea = textArea;
         this.textField = textField;
     }
+    /* Try to run a test for the given filename in the textfield  */
     public void actionPerformed(ActionEvent event){
         String text = this.textField.getText();
         try {

@@ -1,5 +1,3 @@
-package assignment_1;
-
 import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
 
 import javax.swing.*;
@@ -28,7 +26,7 @@ class Tester {
      */
     Tester(String name, JTextArea textArea) throws ClassNotFoundException, ClassFormatException, ClassFormatError{
         this.textArea = textArea;
-        classInstance = Class.forName("assignment_1." + name); // Package name needs to be included
+        classInstance = Class.forName(name);
         try {
             if (classInstance.isInterface()) {
                 throw new ClassFormatError();
@@ -36,7 +34,7 @@ class Tester {
                 instance = classInstance.newInstance();
                 if(instance instanceof TestClass){
                     if(classInstance.getConstructor().getParameterCount() != 0){
-                        // Class constructor arguments is not legal as defined in the spec
+                        /* Class constructor arguments is not legal as defined in the spec */
                         throw new ClassFormatError();
                     }
                 }else{
@@ -59,7 +57,7 @@ class Tester {
         Method setUp = null;
         Method tearDown = null;
 
-        // Get all methods from class
+        /* Get all methods from class */
         Method[] testMethods = classInstance.getDeclaredMethods();
         for(Method method : testMethods){
             if(method.getParameterCount() == 0) {   // Don't add tests with arguments
@@ -72,15 +70,14 @@ class Tester {
                 }
             }
         }
-        // Counters
+        /* Counters */
         Integer success = 0;
         Integer failed = 0;
         Integer exceptionFailed = 0;
 
-        // Run all methods
+        /* Run all methods */
         for(Method test : tests){
             try{
-                // run setUp before every test
                 if(setUp != null){
                     setUp.invoke(instance);
                 }
@@ -93,7 +90,6 @@ class Tester {
                     failed++;
                     this.textArea.append("FAILED\n");
                 }
-                // run tearDown after every test
                 if(tearDown != null){
                     tearDown.invoke(instance);
                 }
@@ -102,7 +98,7 @@ class Tester {
                 this.textArea.append("FAILED Generated a " + e + "\n");
             }
         }
-        // Print the results to the given textArea object
+        /* Print the results to the given textArea object */
         Integer total = success + failed + exceptionFailed;
         this.textArea.append("\n" + success + "/" + total + " tests succeded" + "\n");
         this.textArea.append(failed + "/" + total + " tests failed" + "\n");

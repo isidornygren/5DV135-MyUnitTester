@@ -1,6 +1,3 @@
-package assignment_1;
-
-
 public class Test1 implements TestClass {
     private MyInt myInt;
 

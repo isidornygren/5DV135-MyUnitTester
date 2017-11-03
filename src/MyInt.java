@@ -1,5 +1,3 @@
-package assignment_1;
-
 public class MyInt {
     private int val;
     public MyInt() {

@@ -1,5 +1,3 @@
-package assignment_1;
-
 /**
  * @version 1.0
  * @author Isidor Nygren

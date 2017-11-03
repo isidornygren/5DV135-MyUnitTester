@@ -1,5 +1,3 @@
-package assignment_1;
-
 /**
  * A basic class created to be tested by the MyUnitTester system
  * @version 1.0
@@ -48,6 +46,11 @@ public class Test2 implements TestClass {
     public boolean testIntegerToStringToNumber() {
         Object string = (four.toString() + twenty.toString());
         return (string instanceof Integer);
+    }
+
+    //Test that should get an exception fail
+    public boolean testIntegerParse(){
+        return (new Integer("four-twenty") == 420);
     }
 
     //Test that should succeed
