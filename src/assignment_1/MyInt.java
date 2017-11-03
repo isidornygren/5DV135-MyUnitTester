@@ -1,4 +1,4 @@
-package _5dv135.assignment1;
+package assignment_1;
 
 public class MyInt {
     private int val;

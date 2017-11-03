@@ -1,4 +1,4 @@
-package _5dv135.assignment1;
+package assignment_1;
 
 import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
 
@@ -26,18 +26,16 @@ class Tester {
      * @throws ClassFormatException If the .class file contains errors.
      * @throws ClassFormatError if the given class is not following the given spec.
      */
-    public Tester(String name, JTextArea textArea) throws ClassNotFoundException, ClassFormatException, ClassFormatError{
+    Tester(String name, JTextArea textArea) throws ClassNotFoundException, ClassFormatException, ClassFormatError{
         this.textArea = textArea;
-        classInstance = Class.forName("_5dv135.assignment1." + name);
+        classInstance = Class.forName("assignment_1." + name); // Package name needs to be included
         try {
             if (classInstance.isInterface()) {
                 throw new ClassFormatError();
             } else {
                 instance = classInstance.newInstance();
                 if(instance instanceof TestClass){
-                    if(classInstance.getConstructor().getParameterCount() == 0){
-                        // Everything checks out fine
-                    }else{
+                    if(classInstance.getConstructor().getParameterCount() != 0){
                         // Class constructor arguments is not legal as defined in the spec
                         throw new ClassFormatError();
                     }
@@ -45,12 +43,8 @@ class Tester {
                     throw new ClassNotFoundException();
                 }
             }
-        }catch(InstantiationException e){
-
-        }catch(IllegalAccessException e){
-
-        }catch(NoSuchMethodException e){    // No constructor found
-
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -60,8 +54,8 @@ class Tester {
      * If a setUp method is found, it runs that method before every test.
      * If a tearDown method is found, it runs that method after every test.
      */
-    public void run(){
-        List<Method> tests = new ArrayList<Method>(); // Array of all the names of the test methods
+    void run(){
+        List<Method> tests = new ArrayList<>(); // Array of all the names of the test methods
         Method setUp = null;
         Method tearDown = null;
 

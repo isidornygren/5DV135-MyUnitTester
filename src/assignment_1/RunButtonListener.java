@@ -1,4 +1,4 @@
-package _5dv135.assignment1;
+package assignment_1;
 
 import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
 
@@ -19,7 +19,7 @@ class RunButtonListener implements ActionListener {
     private final JTextArea textArea;
     private final JTextField textField;
 
-    public RunButtonListener(JTextArea textArea, JTextField textField){
+    RunButtonListener(JTextArea textArea, JTextField textField){
         this.textArea = textArea;
         this.textField = textField;
     }

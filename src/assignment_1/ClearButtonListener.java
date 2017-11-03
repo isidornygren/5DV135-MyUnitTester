@@ -1,4 +1,4 @@
-package _5dv135.assignment1;
+package assignment_1;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ public class ClearButtonListener implements ActionListener {
 
     private final JTextArea textArea;
 
-    public ClearButtonListener(JTextArea textArea){
+    ClearButtonListener(JTextArea textArea){
         this.textArea = textArea;
     }
     public void actionPerformed(ActionEvent e){

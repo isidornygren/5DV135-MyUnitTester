@@ -1,4 +1,4 @@
-package _5dv135.assignment1;
+package assignment_1;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,15 +9,15 @@ import java.awt.*;
  * @author Isidor Nygren
  */
 
-public class TestWindow {
+class TestWindow {
     private JFrame frame;
 
     private JTextArea textArea;
     private JTextField textField;
 
-    public TestWindow(String title){
+    TestWindow(String title){
         frame = new JFrame(title);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         frame.add(buildOutputPanel(), BorderLayout.CENTER); // Needs to be first to build the ouput text-area
         frame.add(buildTopPanel(), BorderLayout.PAGE_START);

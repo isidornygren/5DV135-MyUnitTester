@@ -1,4 +1,4 @@
-package _5dv135.assignment1;
+package assignment_1;
 
 /**
  * A basic class created to be tested by the MyUnitTester system
@@ -41,7 +41,7 @@ public class Test2 implements TestClass {
 
     //Test that should succeed
     public boolean testIntegerToString() {
-        return (four.toString() + twenty.toString()) == "420";
+        return (four.toString() + twenty.toString()).equals("420");
     }
 
     //Test that should fail
