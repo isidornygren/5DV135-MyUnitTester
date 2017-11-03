@@ -41,8 +41,14 @@ class Tester {
                     throw new ClassNotFoundException();
                 }
             }
-        }catch(Exception e){
-            e.printStackTrace();
+        /* All other exceptions will be internal errors opening files */
+        /* and should not be prompted via the input. */
+        }catch(NoSuchMethodException e){
+            new ErrorMessage("Error", "Could not find constructor for test\n" + e);
+        }catch(InstantiationException e){
+            new ErrorMessage("Error", "Could not create new instance of test class\n" + e);
+        }catch(IllegalAccessException e){
+            new ErrorMessage("Error", "No access to class file\n" + e);
         }
     }
 

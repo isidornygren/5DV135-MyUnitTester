@@ -28,9 +28,9 @@ class RunButtonListener implements ActionListener {
             Tester tester = new Tester(text, this.textArea);
             tester.run();
         }catch(ClassNotFoundException e){
-            this.textArea.append("Error: Class not found.\n\t" + e + "\n");
+            new ErrorMessage("Error", "Error: Class " + text + " not found.\n" + e + "\n");
         }catch(ClassFormatException e){
-            this.textArea.append("Error: Wrong class format.\n\t" + e + "\n");
+            new ErrorMessage("Error", "Error: Wrong class format.\n" + e + "\n");
         }
     }
 }

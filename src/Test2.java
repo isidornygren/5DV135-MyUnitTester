@@ -22,14 +22,12 @@ public class Test2 implements TestClass {
 
     // This method should not be run
     public boolean thisIsNotATest(){
-        System.out.println("Error: This should not have happened.");
-        return false;
+        throw new ClassCastException();
     }
 
     // This method should also not run
     public boolean testArgument(String arg){
-        System.out.println("Error: This should not have happened.");
-        return false;
+        throw new ClassCastException();
     }
 
     //Test that should succeed
