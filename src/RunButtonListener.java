@@ -31,6 +31,13 @@ class RunButtonListener implements ActionListener {
             new ErrorMessage("Error", "Error: Class " + text + " not found.\n" + e + "\n");
         }catch(ClassFormatException e){
             new ErrorMessage("Error", "Error: Wrong class format.\n" + e + "\n");
+        }catch(NoSuchMethodException e){
+            new ErrorMessage("Error", "Could not find constructor for test\n" + e);
+        }catch(InstantiationException e){
+            new ErrorMessage("Error", "Could not create new instance of test class.\n" +
+                "Does the test class follow the conventions?\n" + e);
+        }catch(IllegalAccessException e){
+            new ErrorMessage("Error", "No access to class file\n" + e);
         }
     }
 }

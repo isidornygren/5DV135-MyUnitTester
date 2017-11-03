@@ -24,32 +24,25 @@ class Tester {
      * @throws ClassFormatException If the .class file contains errors.
      * @throws ClassFormatError if the given class is not following the given spec.
      */
-    Tester(String name, JTextArea textArea) throws ClassNotFoundException, ClassFormatException, ClassFormatError{
+    Tester(String name, JTextArea textArea) throws InstantiationException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException, ClassFormatException, ClassFormatError{
         this.textArea = textArea;
         classInstance = Class.forName(name);
-        try {
-            if (classInstance.isInterface()) {
-                throw new ClassFormatError();
-            } else {
-                instance = classInstance.newInstance();
-                if(instance instanceof TestClass){
-                    if(classInstance.getConstructor().getParameterCount() != 0){
-                        /* Class constructor arguments is not legal as defined in the spec */
-                        throw new ClassFormatError();
-                    }
-                }else{
-                    throw new ClassNotFoundException();
+        if (classInstance.isInterface()) {
+            throw new ClassFormatError();
+        } else {
+            instance = classInstance.newInstance();
+            if(instance instanceof TestClass){
+                if(classInstance.getConstructor().getParameterCount() != 0){
+                    /* Class constructor arguments is not legal as defined in the spec */
+                    throw new ClassFormatError();
                 }
+            }else{
+                throw new ClassNotFoundException();
             }
+        }
         /* All other exceptions will be internal errors opening files */
         /* and should not be prompted via the input. */
-        }catch(NoSuchMethodException e){
-            new ErrorMessage("Error", "Could not find constructor for test\n" + e);
-        }catch(InstantiationException e){
-            new ErrorMessage("Error", "Could not create new instance of test class\n" + e);
-        }catch(IllegalAccessException e){
-            new ErrorMessage("Error", "No access to class file\n" + e);
-        }
+
     }
 
     /**
