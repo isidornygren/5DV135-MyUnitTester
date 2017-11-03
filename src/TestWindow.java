@@ -22,7 +22,13 @@ class TestWindow {
         frame.add(buildBottomPanel(), BorderLayout.PAGE_END);
 
         frame.pack();
-        frame.setVisible(true);
+    }
+
+    /**
+     * Sets the visibility of the window
+     */
+    void setVisible(boolean visible){
+        this.frame.setVisible(visible);
     }
 
     /**
