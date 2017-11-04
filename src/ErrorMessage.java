@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 /**
- * Creates a new dialog box for error messages
+ * ErrorMessage creates a new dialog box for error messages
  * @version 1.0
  * @author Isidor Nygren
  */
