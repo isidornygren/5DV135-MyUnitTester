@@ -1,6 +1,5 @@
 import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
 
-import javax.swing.*;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,21 +90,22 @@ class Tester {
     ArrayList<ResultObject> run(){
         ArrayList<ResultObject> results = new ArrayList<>();
         for(Method test : tests){
+            long startTime = System.nanoTime();
             try{
                 if(setUp != null){
                     setUp.invoke(instance);
                 }
                 if((boolean)test.invoke(instance)){
 
-                    results.add(new ResultObject(test, true));
+                    results.add(new ResultObject(test, true, System.nanoTime() - startTime));
                 }else{
-                    results.add(new ResultObject(test, false));
+                    results.add(new ResultObject(test, false, System.nanoTime() - startTime));
                 }
                 if(tearDown != null){
                     tearDown.invoke(instance);
                 }
             }catch (Exception e){
-                results.add(new ResultObject(test, false, e));
+                results.add(new ResultObject(test, false, System.nanoTime() - startTime, e));
             }
         }
         return results;

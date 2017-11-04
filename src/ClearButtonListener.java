@@ -13,9 +13,18 @@ public class ClearButtonListener implements ActionListener {
 
     private final JTextArea textArea;
 
+    /**
+     *
+     * @param textArea
+     */
     ClearButtonListener(JTextArea textArea){
         this.textArea = textArea;
     }
+
+    /**
+     *
+     * @param e
+     */
     public void actionPerformed(ActionEvent e){
         this.textArea.setText(null);
     }

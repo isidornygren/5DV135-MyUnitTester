@@ -8,15 +8,17 @@ import java.lang.reflect.*;
 public class ResultObject {
     private Method method = null;
     private boolean success = false;
+    private long time = 0;
     private Exception exception = null;  // If the test generated an exception
 
     /**
      * @param method the method that was tested
      * @param success if the test was a success = if the method returned true
      */
-    ResultObject(Method method, boolean success){
+    ResultObject(Method method, boolean success, long time){
         this.method = method;
         this.success = success;
+        this.time = time;
     }
 
     /**
@@ -26,9 +28,10 @@ public class ResultObject {
      * @param success if the test was a success = if the method returned true
      * @param e the generated exception
      */
-    ResultObject(Method method, boolean success, Exception e){
+    ResultObject(Method method, boolean success, long time, Exception e){
         this.method = method;
         this.success = success;
+        this.time = time;
         this.exception = e;
     }
 
@@ -62,5 +65,13 @@ public class ResultObject {
      */
     Exception getException(){
         return this.exception;
+    }
+
+    /**
+     * Returns the time it took for the test to run
+     * @return the time in ms
+     */
+    long getTime(){
+        return this.time;
     }
 }
