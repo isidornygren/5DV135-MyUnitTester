@@ -1,3 +1,5 @@
+package Model;
+
 import java.lang.reflect.*;
 
 /**
@@ -15,7 +17,7 @@ public class ResultObject {
      * @param method the method that was tested
      * @param success if the test was a success = if the method returned true
      */
-    ResultObject(Method method, boolean success, long time){
+    public ResultObject(Method method, boolean success, long time){
         this.method = method;
         this.success = success;
         this.time = time;
@@ -28,18 +30,34 @@ public class ResultObject {
      * @param success if the test was a success = if the method returned true
      * @param e the generated exception
      */
-    ResultObject(Method method, boolean success, long time, Exception e){
+    public ResultObject(Method method, boolean success, long time, Exception e){
         this.method = method;
         this.success = success;
         this.time = time;
         this.exception = e;
+    }
+    /**
+     * Prints the result of one test
+     * @return a string formatted for easy readability
+     */
+    public String formatString(){
+        StringBuilder formattedString = new StringBuilder();
+        formattedString.append(getMethod().getName()).append(": ");
+        if(isException()){
+            formattedString.append("FAILED Generated a ").append(getException());
+        }else if(isSuccess()){
+            formattedString.append("SUCCESS");
+        }else{
+            formattedString.append("FAILED");
+        }
+        return String.format("%s. Finished in %.6fms\n", formattedString.toString(), getTime()*Math.pow(10,-6));
     }
 
     /**
      * Getter for the method that the result is based on
      * @return the method
      */
-    Method getMethod(){
+    public Method getMethod(){
         return this.method;
     }
 
@@ -47,7 +65,7 @@ public class ResultObject {
      * Returns if the result was a success
      * @return true if it was a success, otherwise false
      */
-    Boolean isSuccess(){
+    public Boolean isSuccess(){
         return this.success;
     }
 
@@ -55,7 +73,7 @@ public class ResultObject {
      * Returns if there occurred an exception during the run of the test
      * @return true if there occurred an exception, otherwise false
      */
-    Boolean isException(){
+    public Boolean isException(){
         return (this.exception == null) ? false : true;
     }
 
@@ -63,7 +81,7 @@ public class ResultObject {
      * Returns the exception that occured
      * @return the exception if it occured, otherwise null
      */
-    Exception getException(){
+    public Exception getException(){
         return this.exception;
     }
 
@@ -71,7 +89,7 @@ public class ResultObject {
      * Returns the time it took for the test to run
      * @return the time in ms
      */
-    long getTime(){
+    public long getTime(){
         return this.time;
     }
 }

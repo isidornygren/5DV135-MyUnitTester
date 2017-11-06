@@ -1,3 +1,5 @@
+import Model.TestClass;
+
 /**
  * A basic test class that should not be able to run
  * @version 1.0

@@ -1,3 +1,7 @@
+package View;
+
+import Controller.TesterController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,14 +10,15 @@ import java.awt.*;
  * @version 1.0
  * @author Isidor Nygren
  */
-
-class TestWindow {
+public class TesterView {
     private JFrame frame;
 
     private JTextArea textArea;
     private JTextField textField;
+    private TesterController controller;
 
-    TestWindow(String title){
+    public TesterView(TesterController controller, String title){
+        this.controller = controller;
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -27,7 +32,7 @@ class TestWindow {
     /**
      * Sets the visibility of the window
      */
-    void setVisible(boolean visible){
+    public void setVisible(boolean visible){
         this.frame.setVisible(visible);
     }
 
@@ -40,7 +45,8 @@ class TestWindow {
         textField = new JTextField(20);
         JButton runButton = new JButton("Run tests");
 
-        runButton.addActionListener(new RunButtonListener(textArea, textField));
+        runButton.addActionListener(e -> controller.runTest(e));
+
         panel.add(textField);
         panel.add(runButton);
 
@@ -72,10 +78,42 @@ class TestWindow {
         JPanel panel = new JPanel(new FlowLayout());
         JButton clearButton = new JButton("Clear");
 
-        clearButton.addActionListener(new ClearButtonListener(textArea));
+        clearButton.addActionListener(e -> clearText());
         panel.add(clearButton);
 
         return panel;
+    }
+
+    /**
+     * Clears all the text in the default text area for the view
+     */
+    public void clearText(){
+        this.textArea.setText(null);
+    }
+
+    /**
+     * Gets the current String from the textField input box
+     * @return the String from the input
+     */
+    public String getInput(){
+        return this.textField.getText();
+    }
+
+    /**
+     * Appends text to the default text area for the view
+     * @param text the text to show in the view
+     */
+    public void print(String text){
+        this.textArea.append(text);
+    }
+
+    /**
+     * creates a new dialog box for error messages
+     * @param title The title to appear at the top bar of the window
+     * @param message The message to be displayed inside the error dialog
+     */
+    public void errorMessage(String title, String message){
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
     }
 
 }

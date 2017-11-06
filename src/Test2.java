@@ -1,3 +1,5 @@
+import Model.TestClass;
+
 /**
  * A basic class created to be tested by the MyUnitTester system
  * @version 1.0

@@ -1,3 +1,5 @@
+import Model.TestClass;
+
 /**
  * A basic test class that checks that tests does not run without a return value
  * @version 1.0
