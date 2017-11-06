@@ -169,7 +169,7 @@ public class TesterModel {
                 total, success, failed, exception);
 
         if(elapsedTime > 0){
-            String time = String.format("\nFinished tests in %fs, %.2f tests/s.\n\n", elapsedTime*Math.pow(10,-9), total/(elapsedTime*Math.pow(10,-9)));
+            String time = String.format("\nFinished tests in %s, %.2f tests/s.\n\n", ResultObject.formatTime(elapsedTime), total/(elapsedTime*Math.pow(10,-9)));
             formattedString.append(time);
         }
         formattedString.append(output);

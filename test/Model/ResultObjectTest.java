@@ -31,9 +31,16 @@ public class ResultObjectTest {
     }
 
     @Test
+    public void formatTime() throws Exception{
+        assertEquals("1.000s", ResultObject.formatTime(1000000000));
+        assertEquals("0.100s", ResultObject.formatTime(100000000));
+        assertEquals("1.000ms", ResultObject.formatTime(1000000));
+    }
+
+    @Test
     public void formatString() throws Exception {
         String formatString = resultObject.formatString();
-        String testString = String.format("%s: SUCCESS. Finished in %.6fms\n", resultObject.getMethod().getName(), resultObject.getTime()*Math.pow(10,-6));
+        String testString = String.format("%s: SUCCESS. Finished in %s\n", resultObject.getMethod().getName(), ResultObject.formatTime(resultObject.getTime()));
         assertEquals(formatString, testString);
     }
 
