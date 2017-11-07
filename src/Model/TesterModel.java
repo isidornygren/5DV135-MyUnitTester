@@ -22,6 +22,10 @@ public class TesterModel {
     private Method tearDown = null;
 
     /**
+     * A tester object that tries to open a Class by its name using the reflection library,
+     * if a class is found, checks so it follows a set of rules:
+     * - Class has to be implementing the TestClass class
+     * - The constructor should take zero parameters
      * @param name The name of the class to be tested.
      * @throws ClassNotFoundException If the class is not found in this package.
      * @throws ClassFormatException If the .class file contains errors.
@@ -53,7 +57,11 @@ public class TesterModel {
     /**
      * Sets the Model.Tester object up for the tests in the method by finding all the declared methods
      * through the reflection library, finds all methods beginning with "test" and checks that they are
-     * legal, if they are legal they get added to the return array.
+     * "legal" e.g. following the following rules:
+     * - The method should take zero parameters
+     * - The method name needs to start with "test"
+     * - The method needs to return a boolean
+     * If the methods are legal they get added to the return array.
      * If the method setUp and tearDown is found these are added to the Model.Tester object to be run before and
      * after every test.
      */
@@ -163,15 +171,14 @@ public class TesterModel {
                 failed++;
             }
         }
-        /* Print the results to the given textArea object */
         Integer total = success + failed + exception;
-        String output = String.format("%d tests total, %d successes, %d fails, %d fails because of exceptions\n",
-                total, success, failed, exception);
-
         if(elapsedTime > 0){
-            String time = String.format("\nFinished tests in %s, %.2f tests/s.\n\n", ResultObject.formatTime(elapsedTime), total/(elapsedTime*Math.pow(10,-9)));
+            String time = String.format("\nFinished tests in %s, %.2f tests/s.\n\n",
+                    ResultObject.formatTime(elapsedTime), total/(elapsedTime*Math.pow(10,-9)));
             formattedString.append(time);
         }
+        String output = String.format("%d tests total, %d successes, %d fails, %d fails because of exceptions\n",
+                total, success, failed, exception);
         formattedString.append(output);
         return formattedString.toString();
     }

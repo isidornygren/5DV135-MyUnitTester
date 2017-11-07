@@ -25,6 +25,7 @@ public class Test implements TestClass {
     public boolean notATest(){
         return true;
     }
+
     // This method should also not run
     public boolean testArgument(String arg){
         throw new ClassCastException();

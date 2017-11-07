@@ -22,7 +22,7 @@ public class TesterView {
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frame.add(buildOutputPanel(), BorderLayout.CENTER); // Needs to be first to build the ouput text-area
+        frame.add(buildOutputPanel(), BorderLayout.CENTER); // Needs to be first to build the output text-area
         frame.add(buildTopPanel(), BorderLayout.PAGE_START);
         frame.add(buildBottomPanel(), BorderLayout.PAGE_END);
 

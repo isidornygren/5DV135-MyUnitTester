@@ -36,7 +36,7 @@ public class TesterController{
         String text = this.view.getInput();
 
         try{
-            // Check so no worker is running in the background already
+            /* Check so no worker is running in the background already */
             if(this.worker != null){
                 this.worker.cancel(true);
             }
@@ -46,6 +46,7 @@ public class TesterController{
             this.view.print("Running " + text + ":\n\n");
             this.view.print(test.formatFormattingErrors());
 
+            /* Run the tests for the class in a separate thread */
             this.worker = new TestWorker(test, this.view);
             this.worker.execute();
 

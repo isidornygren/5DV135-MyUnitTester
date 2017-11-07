@@ -37,19 +37,34 @@ public class TesterModelTest {
         for(Method method : methods){
             ResultObject result = testerModel.run(method);
             assertNotEquals(result, null);
+            assertNotNull(result.getMethod());
+            assertNotNull(result.getTime());
+            assertNotNull(result.isSuccess());
         }
     }
 
     @Test
     public void runAll() throws Exception {
+        ArrayList<ResultObject> results = testerModel.runAll();
+        for(ResultObject result : results){
+            assertNotNull(result);
+            assertNotNull(result.getMethod());
+            assertNotNull(result.getTime());
+            assertNotNull(result.isSuccess());
+        }
     }
 
     @Test
     public void formatFormattingErrors() throws Exception {
+        assertNotNull(testerModel.formatFormattingErrors());
+        assertTrue(testerModel.formatFormattingErrors().startsWith("Found 1 formatting errors in test class"));
     }
 
     @Test
     public void formatResults() throws Exception {
+        testerModel.runAll();
+        assertNotNull(testerModel.formatResults());
+        System.out.println(testerModel.formatResults());
+        assertTrue(testerModel.formatResults().startsWith("\nFinished tests in "));
     }
-
 }
