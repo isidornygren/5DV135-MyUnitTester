@@ -33,7 +33,7 @@ public class TesterController{
      * @param event ActionEvent gives information about the event and its source
      */
     public void runTest(ActionEvent event){
-        String text = this.view.getInput();
+        String className = this.view.getInput();
 
         try{
             /* Check so no worker is running in the background already */
@@ -41,9 +41,9 @@ public class TesterController{
                 this.worker.cancel(true);
             }
 
-            TesterModel test = new TesterModel(text);
+            TesterModel test = new TesterModel(className);
             this.view.clearText();
-            this.view.print("Running " + text + ":\n\n");
+            this.view.print("Running " + className + ":\n\n");
             this.view.print(test.formatFormattingErrors());
 
             /* Run the tests for the class in a separate thread */
@@ -51,7 +51,7 @@ public class TesterController{
             this.worker.execute();
 
         }catch(ClassNotFoundException e){
-            view.errorMessage("Error", "Error: Class " + text + " not found.\n" + e + "\n");
+            view.errorMessage("Error", "Error: Class " + className + " not found.\n" + e + "\n");
         }catch(ClassFormatException e){
             view.errorMessage("Error", "Error: Wrong class format.\n" + e + "\n");
         }catch(NoSuchMethodException e){
