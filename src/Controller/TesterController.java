@@ -18,7 +18,7 @@ public class TesterController{
     private TestWorker worker;
 
     /**
-     * Builds a new view object through swing
+     * Builds a new view object based on swing
      */
     public TesterController(){
         javax.swing.SwingUtilities.invokeLater(() -> {

@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
+ * The model handling the testing of a class
  * @version 1.0
  * @author Isidor Nygren
  */
@@ -160,7 +161,6 @@ public class TesterModel {
         long elapsedTime = 0;
         StringBuilder formattedString = new StringBuilder();
 
-        /* Count all the results for the methods */
         for(ResultObject result : results){
             elapsedTime += result.getTime();
             if(result.isException()){

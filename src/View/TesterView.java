@@ -100,8 +100,8 @@ public class TesterView {
     }
 
     /**
-     * Appends text to the default text area for the view
-     * @param text the text to show in the view
+     * Appends the text to the default text area in the view
+     * @param text the String to print out
      */
     public void print(String text){
         this.textArea.append(text);
