@@ -21,6 +21,7 @@ public class TesterView {
         this.controller = controller;
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(400, 300));
 
         frame.add(buildOutputPanel(), BorderLayout.CENTER); // Needs to be first to build the output text-area
         frame.add(buildTopPanel(), BorderLayout.PAGE_START);
