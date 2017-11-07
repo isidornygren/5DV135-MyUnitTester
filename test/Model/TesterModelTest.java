@@ -64,7 +64,6 @@ public class TesterModelTest {
     public void formatResults() throws Exception {
         testerModel.runAll();
         assertNotNull(testerModel.formatResults());
-        System.out.println(testerModel.formatResults());
         assertTrue(testerModel.formatResults().startsWith("\nFinished tests in "));
     }
 }

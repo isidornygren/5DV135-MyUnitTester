@@ -69,7 +69,7 @@ public class ResultObjectTest {
 
     @Test
     public void getTime() throws Exception {
-        assertTrue(resultObject.getTime() == time);
+        assertTrue(resultObject.getTime() == this.time);
     }
 
 }
