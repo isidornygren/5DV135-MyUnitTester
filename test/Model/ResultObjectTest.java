@@ -10,13 +10,10 @@ import static org.junit.Assert.*;
 
 public class ResultObjectTest {
     private ResultObject resultObject;
-    Class<?> classInstance;
-    Method method;
-    double time;
+    private Class<?> classInstance;
+    private Method method;
+    private double time;
 
-    public boolean testMethod(){
-        return true;
-    }
     @Before
     public void setUp() throws Exception {
         classInstance = Class.forName("Model.Test");
@@ -31,16 +28,9 @@ public class ResultObjectTest {
     }
 
     @Test
-    public void formatTime() throws Exception{
-        assertEquals("1.000s", ResultObject.formatTime(1000000000));
-        assertEquals("0.100s", ResultObject.formatTime(100000000));
-        assertEquals("1.000ms", ResultObject.formatTime(1000000));
-    }
-
-    @Test
     public void formatString() throws Exception {
         String formatString = resultObject.formatString();
-        String testString = String.format("%s: SUCCESS. Finished in %s\n", resultObject.getMethod().getName(), ResultObject.formatTime(resultObject.getTime()));
+        String testString = String.format("%s: SUCCESS. Finished in %s\n", resultObject.getMethod().getName(), TimeFormat.seconds(resultObject.getTime()));
         assertEquals(formatString, testString);
     }
 
@@ -63,8 +53,9 @@ public class ResultObjectTest {
 
     @Test
     public void getException() throws Exception {
-         ResultObject exceptionResult = new ResultObject(method, false, time, new IllegalAccessException());
-         assertEquals(exceptionResult.getException().getMessage(), new IllegalAccessException().getMessage());
+        assertNull(resultObject.getException());
+        ResultObject exceptionResult = new ResultObject(method, false, time, new IllegalAccessException());
+        assertEquals(exceptionResult.getException().getMessage(), new IllegalAccessException().getMessage());
     }
 
     @Test

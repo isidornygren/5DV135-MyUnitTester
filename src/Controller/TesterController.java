@@ -66,12 +66,12 @@ public class TesterController{
 }
 
 /**
- * A worker extending the SwingWorker and its threadmanagement,
+ * A worker extending the SwingWorker and its thread management,
  * Used for running the tests and sending the results of the tests to the view
  */
 class TestWorker extends SwingWorker<Boolean, String>{
-    private TesterModel testClass;
-    private TesterView view;
+    private final TesterModel testClass;
+    private final TesterView view;
 
     /**
      * Creates a new worker
@@ -87,10 +87,9 @@ class TestWorker extends SwingWorker<Boolean, String>{
      * The main worker thread, runs the tests and (if not cancelled) prints them
      * to the view
      * @return true if running, false if cancelled
-     * @throws Exception
      */
     @Override
-    protected Boolean doInBackground() throws Exception {
+    protected Boolean doInBackground() {
         for(Method method : testClass.getMethods()) {
             ResultObject result = testClass.run(method);
             if(isCancelled()){

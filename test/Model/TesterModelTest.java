@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class TesterModelTest {
-    TesterModel testerModel;
+    private TesterModel testerModel;
     @Before
     public void setUp() throws Exception {
         testerModel = new TesterModel("Model.Test");

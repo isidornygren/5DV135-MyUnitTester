@@ -11,11 +11,11 @@ import java.awt.*;
  * @author Isidor Nygren
  */
 public class TesterView {
-    private JFrame frame;
+    private final JFrame frame;
 
     private JTextArea textArea;
     private JTextField textField;
-    private TesterController controller;
+    private final TesterController controller;
 
     public TesterView(TesterController controller, String title){
         this.controller = controller;

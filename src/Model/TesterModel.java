@@ -17,7 +17,7 @@ public class TesterModel {
 
     private ArrayList<Method> tests = new ArrayList<>(); // Array of all the test methods in the class
     private ArrayList<ResultObject> results = new ArrayList<>(); // Array of all the test results after run
-    private ArrayList<String> formattingErrors = new ArrayList<>(); // Array of formatting errors of class
+    private ArrayList<String>  formattingErrors = new ArrayList<>(); // Array of formatting errors of class
 
     private Method setUp = null;
     private Method tearDown = null;
@@ -139,9 +139,9 @@ public class TesterModel {
         StringBuilder formattedString = new StringBuilder();
 
         if (formattingErrors.size() > 0){
-            formattedString.append("Found " + formattingErrors.size() + " formatting errors in test class:\n");
+            formattedString.append("Found ").append(formattingErrors.size()).append(" formatting errors in test class:\n");
             for(String error : formattingErrors){
-                formattedString.append(error + "\n");
+                formattedString.append(error).append("\n");
             }
             formattedString.append("\n");
         }
@@ -174,7 +174,7 @@ public class TesterModel {
         Integer total = success + failed + exception;
         if(elapsedTime > 0){
             String time = String.format("\nFinished tests in %s, %.2f tests/s.\n\n",
-                    ResultObject.formatTime(elapsedTime), total/(elapsedTime*Math.pow(10,-9)));
+                    TimeFormat.seconds(elapsedTime), total/(elapsedTime*Math.pow(10,-9)));
             formattedString.append(time);
         }
         String output = String.format("%d tests total, %d successes, %d fails, %d fails because of exceptions\n",

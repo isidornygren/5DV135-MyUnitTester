@@ -50,7 +50,7 @@ public class ResultObject {
         }else{
             formattedString.append("FAILED");
         }
-        return String.format("%s. Finished in %s\n", formattedString.toString(), ResultObject.formatTime(getTime()));
+        return String.format("%s. Finished in %s\n", formattedString.toString(), TimeFormat.seconds(getTime()));
     }
 
     /**
@@ -74,12 +74,12 @@ public class ResultObject {
      * @return true if there occurred an exception, otherwise false
      */
     public Boolean isException(){
-        return (this.exception == null) ? false : true;
+        return this.exception != null;
     }
 
     /**
-     * Returns the exception that occured
-     * @return the exception if it occured, otherwise null
+     * Returns the exception that occurred
+     * @return the exception if it occurred, otherwise null
      */
     public Exception getException(){
         return this.exception;
@@ -91,26 +91,5 @@ public class ResultObject {
      */
     public double getTime(){
         return this.time;
-    }
-
-    /**
-     * Formats a small double into a human-readable format
-     * @param time the time in nanoseconds to format
-     * @return a string formatted in x.xxxs format.
-     */
-    public static String formatTime(double time) {
-        String string;
-        if (time > Math.pow(10, 9) * 60) { // Minutes
-            string = String.format("%.3fmin", time/(Math.pow(10, 9) * 60));
-        } else if (time > Math.pow(10, 7)) { // Seconds
-            string = String.format("%.3fs", time/(Math.pow(10, 9)));
-        } else if (time > Math.pow(10, 4)) { // Milliseconds
-            string = String.format("%.3fms", time/(Math.pow(10, 6)));
-        } else if (time > 10) { // Microseconds
-            string = String.format("%.3fµs", time/(Math.pow(10, 3)));
-        } else{ // Nanosecond
-            string = String.format("%.3fns", time);
-        }
-        return string;
     }
 }
