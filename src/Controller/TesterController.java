@@ -7,6 +7,7 @@ import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Controller for building and handling the model and the view
@@ -42,7 +43,6 @@ public class TesterController{
             }
 
             TesterModel test = new TesterModel(className);
-            this.view.clearText();
             this.view.print("Running " + className + ":\n\n");
             this.view.print(test.formatFormattingErrors());
 
@@ -95,10 +95,21 @@ class TestWorker extends SwingWorker<Boolean, String>{
             if(isCancelled()){
                 return false;
             }else{
-                this.view.print(result.formatString());
+                publish(result.formatString());
             }
         }
         return true;
+    }
+
+    /**
+     * called by the background thread to print Strings in the main EDT thread
+     * @param chunks the result strings from the tests
+     */
+    @Override
+    protected void process(List<String> chunks) {
+        for (String result : chunks) {
+            this.view.print(result);
+        }
     }
 
     /**
@@ -107,6 +118,6 @@ class TestWorker extends SwingWorker<Boolean, String>{
      */
     @Override
     protected void done(){
-        this.view.print(testClass.formatResults());
+        this.view.print(testClass.formatResults() + "\n");
     }
 }
