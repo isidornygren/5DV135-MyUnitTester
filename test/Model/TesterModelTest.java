@@ -36,10 +36,7 @@ public class TesterModelTest {
         ArrayList<Method> methods = testerModel.getMethods();
         for(Method method : methods){
             ResultObject result = testerModel.run(method);
-            assertNotEquals(result, null);
-            assertNotNull(result.getMethod());
-            assertNotNull(result.getTime());
-            assertNotNull(result.isSuccess());
+            assertNotNull(result);
         }
     }
 
@@ -48,9 +45,6 @@ public class TesterModelTest {
         ArrayList<ResultObject> results = testerModel.runAll();
         for(ResultObject result : results){
             assertNotNull(result);
-            assertNotNull(result.getMethod());
-            assertNotNull(result.getTime());
-            assertNotNull(result.isSuccess());
         }
     }
 
