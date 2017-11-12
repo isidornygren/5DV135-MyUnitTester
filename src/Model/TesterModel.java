@@ -1,7 +1,5 @@
 package Model;
 
-import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -42,7 +40,7 @@ public class TesterModel {
      */
     public TesterModel(String name) throws InstantiationException,
             IllegalAccessException, NoSuchMethodException,
-            ClassNotFoundException, ClassFormatException, ClassFormatError{
+            ClassNotFoundException, ClassCastException, ClassFormatError{
         classInstance = Class.forName(name);
         if (classInstance.isInterface()) {
             throw new ClassFormatError();
@@ -51,7 +49,7 @@ public class TesterModel {
             if(instance instanceof TestClass){
                 if(classInstance.getConstructor().getParameterCount() != 0){
                     /* Class constructor arguments is not legal as defined in the spec */
-                    throw new ClassFormatError();
+                    throw new ClassCastException();
                 }else{
                     setUp();
                 }
