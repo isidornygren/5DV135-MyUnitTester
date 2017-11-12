@@ -18,10 +18,9 @@ public class Test4 implements TestClass {
 
     // Always returns true
     public boolean testLag() {
-        Integer i = 0;
-        while (i < 1000000000){
-            i++;
-        }
+        try {
+            Thread.sleep(10000);
+        }catch(InterruptedException e){}
         return true;
     }
 

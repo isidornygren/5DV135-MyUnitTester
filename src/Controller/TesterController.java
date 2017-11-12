@@ -43,6 +43,7 @@ public class TesterController{
             }
 
             TesterModel test = new TesterModel(className);
+            this.view.clearText();
             this.view.print("Running " + className + ":\n\n");
             this.view.print(test.formatFormattingErrors());
 
@@ -118,6 +119,6 @@ class TestWorker extends SwingWorker<Boolean, String>{
      */
     @Override
     protected void done(){
-        this.view.print(testClass.formatResults() + "\n");
+        this.view.print(testClass.formatResults());
     }
 }
