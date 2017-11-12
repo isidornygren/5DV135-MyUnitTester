@@ -15,27 +15,33 @@ public class TesterModel {
     private Class<?> classInstance;
     private Object instance;
 
-    private ArrayList<Method> tests = new ArrayList<>(); // Array of all the test methods in the class
-    private ArrayList<ResultObject> results = new ArrayList<>(); // Array of all the test results after run
-    private ArrayList<String>  formattingErrors = new ArrayList<>(); // Array of formatting errors of class
+    private ArrayList<Method> tests = new ArrayList<>();
+    private ArrayList<ResultObject> results = new ArrayList<>();
+    private ArrayList<String>  formattingErrors = new ArrayList<>();
 
     private Method setUp = null;
     private Method tearDown = null;
 
     /**
-     * A tester object that tries to open a Class by its name using the reflection library,
-     * if a class is found, checks so it follows a set of rules:
+     * A tester object that tries to open a Class by its name using the
+     * reflection library, if a class is found, checks so it follows a set of
+     * rules:
      * - Class has to be implementing the TestClass class
      * - The constructor should take zero parameters
      * @param name The name of the class to be tested.
      * @throws ClassNotFoundException If the class is not found in this package.
      * @throws ClassFormatException If the .class file contains errors.
-     * @throws ClassFormatError if the given class is not following the given spec.
-     * @throws InstantiationException if the given class constructor gives error.
-     * @throws IllegalAccessException if reading the class file produces an error.
-     * @throws NoSuchMethodException if there exists no constructor for the class.
+     * @throws ClassFormatError if the given class is not following the given
+     * spec.
+     * @throws InstantiationException if the given class constructor gives
+     * error.
+     * @throws IllegalAccessException if reading the class file produces an
+     * error.
+     * @throws NoSuchMethodException if there exists no constructor for the
+     * class.
      */
-    public TesterModel(String name) throws InstantiationException, IllegalAccessException, NoSuchMethodException,
+    public TesterModel(String name) throws InstantiationException,
+            IllegalAccessException, NoSuchMethodException,
             ClassNotFoundException, ClassFormatException, ClassFormatError{
         classInstance = Class.forName(name);
         if (classInstance.isInterface()) {

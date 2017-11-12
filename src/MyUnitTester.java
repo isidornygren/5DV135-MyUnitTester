@@ -5,7 +5,7 @@ import Controller.TesterController;
  * @author Isidor Nygren
  */
 
-class Main {
+class MyUnitTester {
     public static void main(String[] args){
         new TesterController();
     }
