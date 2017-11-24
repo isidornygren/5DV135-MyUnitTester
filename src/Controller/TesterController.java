@@ -2,7 +2,6 @@ package Controller;
 import Model.ResultObject;
 import Model.TesterModel;
 import View.TesterView;
-import com.sun.org.apache.bcel.internal.classfile.ClassFormatException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -55,7 +54,7 @@ public class TesterController{
 
         }catch(ClassNotFoundException e){
             view.errorMessage("Error", "Error: Class " + className + " not found.\n" + e + "\n");
-        }catch(ClassFormatException e){
+        }catch(ClassCastException e){
             view.errorMessage("Error", "Error: Wrong class format.\n" + e + "\n");
         }catch(NoSuchMethodException e){
             view.errorMessage("Error", "Could not find constructor for test\n" + e);
