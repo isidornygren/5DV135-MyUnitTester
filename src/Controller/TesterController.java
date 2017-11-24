@@ -23,7 +23,9 @@ public class TesterController{
      */
     public TesterController(){
         javax.swing.SwingUtilities.invokeLater(() -> {
-            view = new TesterView(this, "MyUnitTester");
+            view = new TesterView("MyUnitTester");
+            // Add the test button listener
+            view.addTestListener(this::runTest);
             view.setVisible(true);
         });
     }

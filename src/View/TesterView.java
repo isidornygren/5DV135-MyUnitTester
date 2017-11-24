@@ -1,24 +1,23 @@
 package View;
 
-import Controller.TesterController;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Builds the main window for the application using Swing.
  * @version 1.0
  * @author Isidor Nygren
  */
-public class TesterView {
+public class TesterView{
     private final JFrame frame;
 
     private JTextArea textArea;
     private JTextField textField;
-    private final TesterController controller;
+    private JButton runButton;
 
-    public TesterView(TesterController controller, String title){
-        this.controller = controller;
+    public TesterView(String title){
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(400, 300));
@@ -44,9 +43,7 @@ public class TesterView {
     private JPanel buildTopPanel(){
         JPanel panel = new JPanel(new FlowLayout());
         textField = new JTextField(20);
-        JButton runButton = new JButton("Run tests");
-
-        runButton.addActionListener(e -> controller.runTest(e));
+        runButton = new JButton("Run tests");
 
         panel.add(textField);
         panel.add(runButton);
@@ -83,6 +80,14 @@ public class TesterView {
         panel.add(clearButton);
 
         return panel;
+    }
+
+    /**
+     * Adds a external listener to the test button
+     * @param listener The ActionEvent listener that runs when the button is pressed
+     */
+    public void addTestListener(ActionListener listener){
+        runButton.addActionListener(listener);
     }
 
     /**
