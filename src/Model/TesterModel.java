@@ -28,7 +28,6 @@ public class TesterModel {
      * - The constructor should take zero parameters
      * @param name The name of the class to be tested.
      * @throws ClassNotFoundException If the class is not found in this package.
-     * @throws ClassFormatException If the .class file contains errors.
      * @throws ClassFormatError if the given class is not following the given
      * spec.
      * @throws InstantiationException if the given class constructor gives

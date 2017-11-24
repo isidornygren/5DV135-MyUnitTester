@@ -43,17 +43,24 @@ public class ResultObjectTest {
     public void isSuccess() throws Exception {
         assertTrue(resultObject.isSuccess());
     }
+    @Test
+    public void isNotException() throws Exception {
+        assertFalse(resultObject.isException());
 
+    }
     @Test
     public void isException() throws Exception {
-        assertFalse(resultObject.isException());
         ResultObject exceptionResult = new ResultObject(method, false, time, new IllegalAccessException());
         assertTrue(exceptionResult.isException());
     }
 
     @Test
-    public void getException() throws Exception {
+    public void dontGetException() throws Exception {
         assertNull(resultObject.getException());
+    }
+
+    @Test
+    public void getException() throws Exception {
         ResultObject exceptionResult = new ResultObject(method, false, time, new IllegalAccessException());
         assertEquals(exceptionResult.getException().getMessage(), new IllegalAccessException().getMessage());
     }

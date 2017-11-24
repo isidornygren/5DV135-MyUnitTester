@@ -25,8 +25,20 @@ public class TesterModelTest {
     public void getMethods() throws Exception {
         ArrayList<Method> methods = testerModel.getMethods();
         assertEquals(methods.size(), 7);
+    }
+
+    @Test
+    public void getMethodsOnlyTests() throws Exception {
+        ArrayList<Method> methods = testerModel.getMethods();
         for(Method method : methods){
             assertTrue(method.getName().startsWith("test"));
+        }
+    }
+
+    @Test
+    public void getMethodsNoParameters() throws Exception {
+        ArrayList<Method> methods = testerModel.getMethods();
+        for(Method method : methods){
             assertEquals(method.getParameterCount(), 0);
         }
     }
@@ -50,14 +62,12 @@ public class TesterModelTest {
 
     @Test
     public void formatFormattingErrors() throws Exception {
-        assertNotNull(testerModel.formatFormattingErrors());
         assertTrue(testerModel.formatFormattingErrors().startsWith("Found 1 formatting errors in test class"));
     }
 
     @Test
     public void formatResults() throws Exception {
         testerModel.runAll();
-        assertNotNull(testerModel.formatResults());
         assertTrue(testerModel.formatResults().startsWith("\nFinished tests in "));
     }
 }
