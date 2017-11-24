@@ -6,6 +6,7 @@ import View.TesterView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,13 +38,17 @@ public class TesterController{
     public void runTest(ActionEvent event){
         String className = this.view.getInput();
 
-        try{
-            /* Check so no worker is running in the background already */
-            if(this.worker != null){
-                this.worker.cancel(true);
-            }
+        /* Check so no worker is running in the background already */
+        if(this.worker != null){
+            this.worker.cancel(true);
+        }
 
-            TesterModel test = new TesterModel(className);
+        TesterModel test = new TesterModel(className);
+        ArrayList<String> errors = test.getClassErrors();
+        if(errors.size() > 0){
+            // Print the first error if an error was encountered
+            this.view.errorMessage("Error", errors.get(0));
+        }else{
             this.view.clearText();
             this.view.print("Running " + className + ":\n\n");
             this.view.print(test.formatFormattingErrors());
@@ -51,18 +56,6 @@ public class TesterController{
             /* Run the tests for the class in a separate thread */
             this.worker = new TestWorker(test, this.view);
             this.worker.execute();
-
-        }catch(ClassNotFoundException e){
-            view.errorMessage("Error", "Error: Class " + className + " not found.\n" + e + "\n");
-        }catch(ClassCastException e){
-            view.errorMessage("Error", "Error: Wrong class format.\n" + e + "\n");
-        }catch(NoSuchMethodException e){
-            view.errorMessage("Error", "Could not find constructor for test\n" + e);
-        }catch(InstantiationException e){
-            view.errorMessage("Error", "Could not create new instance of test class.\n" +
-                    "Is the Class constructor correctly formatted?\n" + e);
-        }catch(IllegalAccessException e){
-            view.errorMessage("Error", "No access to class file\n" + e);
         }
     }
 }

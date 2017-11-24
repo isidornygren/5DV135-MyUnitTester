@@ -28,6 +28,11 @@ public class TesterModelTest {
     }
 
     @Test
+    public void getClassErrors() throws Exception {
+        assertEquals(testerModel.getClassErrors().size(),0);
+    }
+
+    @Test
     public void getMethodsOnlyTests() throws Exception {
         ArrayList<Method> methods = testerModel.getMethods();
         for(Method method : methods){

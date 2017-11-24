@@ -15,7 +15,8 @@ public class TesterModel {
 
     private ArrayList<Method> tests = new ArrayList<>();
     private ArrayList<ResultObject> results = new ArrayList<>();
-    private ArrayList<String>  formattingErrors = new ArrayList<>();
+    private ArrayList<String> formattingErrors = new ArrayList<>();
+    private ArrayList<String> classErrors = new ArrayList<>();
 
     private Method setUp = null;
     private Method tearDown = null;
@@ -27,34 +28,33 @@ public class TesterModel {
      * - Class has to be implementing the TestClass class
      * - The constructor should take zero parameters
      * @param name The name of the class to be tested.
-     * @throws ClassNotFoundException If the class is not found in this package.
-     * @throws ClassFormatError if the given class is not following the given
-     * spec.
-     * @throws InstantiationException if the given class constructor gives
-     * error.
-     * @throws IllegalAccessException if reading the class file produces an
-     * error.
-     * @throws NoSuchMethodException if there exists no constructor for the
-     * class.
      */
-    public TesterModel(String name) throws InstantiationException,
-            IllegalAccessException, NoSuchMethodException,
-            ClassNotFoundException, ClassCastException, ClassFormatError{
-        classInstance = Class.forName(name);
-        if (classInstance.isInterface()) {
-            throw new ClassFormatError();
-        } else {
-            instance = classInstance.newInstance();
-            if(instance instanceof TestClass){
-                if(classInstance.getConstructor().getParameterCount() != 0){
-                    /* Class constructor arguments is not legal as defined in the spec */
-                    throw new ClassCastException();
-                }else{
-                    setUp();
+    public TesterModel(String name){
+        try {
+            classInstance = Class.forName(name);
+            if (classInstance.isInterface()) {
+                classErrors.add("Class should not be an interface class.");
+            } else {
+                instance = classInstance.newInstance();
+                if (instance instanceof TestClass) {
+                    if (classInstance.getConstructor().getParameterCount() != 0) {
+                        /* Class constructor arguments is not legal as defined in the spec */
+                        classErrors.add("Test class should not have constructor arguments.");
+                    } else {
+                        setUp();
+                    }
+                } else {
+                    classErrors.add("Class " + name + " is not an instance of the Test Class interface.");
                 }
-            }else{
-                throw new ClassNotFoundException();
             }
+        }catch(ClassNotFoundException e){
+            classErrors.add("Error: Class " + name + " not found.\n");
+        }catch (NoSuchMethodException e) {
+            classErrors.add("No constructor found.\n");
+        }catch (IllegalAccessException e) {
+            classErrors.add("Error checking class instance.\n" + e);
+        } catch (InstantiationException e) {
+            classErrors.add("Error instantiating class " + name + ", does it follow the test conventions?\n" + e);
         }
     }
 
@@ -135,7 +135,14 @@ public class TesterModel {
         return results;
     }
     /**
-     * Prints all the formatting errors found during the parsing of the given class
+     * Returns all the class errors found during class file and constructor parsing
+     * @return a list of all the errors
+     */
+    public ArrayList<String> getClassErrors(){
+        return this.classErrors;
+    }
+    /**
+     * Prints all the formatting errors found during the parsing of the given class's methods
      * @return a formatted list of errors in one string
      */
     public String formatFormattingErrors(){
